@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from "react";
+import { unstable_renderSubtreeIntoContainer } from "react-dom";
 import { fetchModule } from "vite";
 
 
@@ -24,22 +25,19 @@ export const Lista = () => {
     //--------------------- Fech------------------------------------------
 
     const userCreate = () => {
-        fetch(https://playground.4geeks.com/todo/users/cristian, {
-            method: "POST"        
+        fetch("https://playground.4geeks.com/todo/users/cristian", {
+            method: "POST",       
     })
-    .then(resp => {
-                if (!resp.ok)
-    })
-    .then({
+    .then(res => res.json())
+    .then(
+        if
+    )
+    .catch()
 
-    })
-    .catch({
-
-    })
-
-
-
-
+//crea rusuario (post)
+//obtener listas (si el usuario no esta creado lo crea) (get)
+//introducir tarea (post)
+//delete - borrar tarea
 
 return (
 
