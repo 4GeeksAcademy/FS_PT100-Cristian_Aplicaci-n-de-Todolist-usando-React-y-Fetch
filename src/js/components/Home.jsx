@@ -1,7 +1,7 @@
 import React from 'react'
 
 //include images into your bundle
-import { Todolist } from "./Todolist.jsx"
+import { Lista } from "./Lista.jsx"
 
 //create your first component
 const Home = () => {
@@ -10,7 +10,7 @@ const Home = () => {
 		<div className="container">
 			<h1>todos</h1>
 			<ul>
-				<Todolist />
+				<Lista />
 			</ul>
 		</div>
 	);
