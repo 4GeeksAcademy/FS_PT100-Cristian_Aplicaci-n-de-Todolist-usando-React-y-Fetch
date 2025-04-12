@@ -62,7 +62,7 @@ export const Lista = () => {
     }
 
     const handleClick = (id) => {
-        console.log(id)
+        console.log(id)                                                    
         fetch('https://playground.4geeks.com/todo/todos/' + id, {
             method: 'DELETE',
         })
