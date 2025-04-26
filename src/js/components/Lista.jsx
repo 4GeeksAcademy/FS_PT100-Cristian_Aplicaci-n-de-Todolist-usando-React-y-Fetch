@@ -12,7 +12,11 @@ export const Lista = () => {
 
     const userCreate = () => {
         fetch('https://playground.4geeks.com/todo/users/cristian', {
-            method: 'POST'
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify()
         })
             .then(resp => {
                 if (!resp.ok) throw new Error(`error code: ${resp.status}`)
@@ -32,42 +36,38 @@ export const Lista = () => {
             .catch(err => userCreate())
     }
 
-    useEffect(() => {
-        if (task.length > 0) {
-            fetch('https://playground.4geeks.com/todo/todos/cristian', {
-                method: 'POST',
-                body: JSON.stringify({
-                    "label": task,
-                    "is_done": false
-                }),
-                headers: {
-                    'Content-Type': 'application/json'
-                }
-            })
-                .then(resp => {
-                    if (!resp.ok) throw new Error(`error code: ${resp.status}`)
-                    return resp.json()
-                })
-                .then(data => {
-                    console.log(data)
-                    setTask('')
-                })
-                .catch(err => console.log(err))
-        }
-    }, [data])
-
     const handleSubmit = e => {
         e.preventDefault();
-        setData([...data, { label: task, is_done: false }])
+        fetch('https://playground.4geeks.com/todo/todos/cristian', {
+            method: 'POST',
+            body: JSON.stringify({
+                label: task,
+                is_done: false
+            }),
+            headers: {
+                'Content-Type': 'application/json'
+            }
+        })
+            .then(resp => {
+                if (!resp.ok) throw new Error(`error code: ${resp.status}`);
+                return resp.json();
+            })
+            .then(newTodo => {
+                console.log(newTodo);
+                setData([...data, newTodo]); // <-- Aquí añadimos el todo que SI tiene id
+                setTask('');
+            })
+            .catch(err => console.log(err));
     }
 
+
     const handleClick = (id) => {
-        console.log(id)                                                    
+        console.log(id)
         fetch('https://playground.4geeks.com/todo/todos/' + id, {
             method: 'DELETE',
         })
             .then(resp => {
-            getUserTodos()
+                getUserTodos()
             })
     }
 
@@ -80,9 +80,13 @@ export const Lista = () => {
                 />
             </form>
             <ul>
-                {data && data.map((el, i) => <li key={i}>
-                    <p>{el.label}<span onClick={() => handleClick(el.id)}>X</span> </p>
-                </li>)}
+                {data && data.map((el) => (
+                    <li key={el.id}>
+                        <p>{el.label}
+                            <span onClick={() => handleClick(el.id)}>X</span> 
+                        </p>
+                    </li>
+                    ))}
             </ul>
             <p className="conteo">
                 {data.length} task
