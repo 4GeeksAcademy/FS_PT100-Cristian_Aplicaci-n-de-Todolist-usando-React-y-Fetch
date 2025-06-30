@@ -54,7 +54,7 @@ export const Lista = () => {
             })
             .then(newTodo => {
                 console.log(newTodo);
-                setData([...data, newTodo]); // <-- Aquí añadimos el todo que SI tiene id
+                setData([...data, newTodo]); 
                 setTask('');
             })
             .catch(err => console.log(err));
